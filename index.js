@@ -7,51 +7,65 @@ const totalUser = [
 ]
 
 
-
 const main = document.querySelector("#main");
 
-
+function show() {
+var butter = "";
 totalUser.forEach((item, index) => {
-    const butter = `
+    butter += `
+    <div class ="card"> 
             <img src=${item.img} alt=${item.name} />
             <h1>${item.name}</h1>
-            <h3>${item.status} </h3>
-            <p> ${item.Bio} </p>
-            <button class="buttonAdd">Add Friend</button>
+            <h3 class=${item.status}>${item.status}</h3>
+            <p>${item.Bio}</p>
+            <button class="buttonAdd" id="${index}">Add Friend</button>
+            </div>
             `;
-    userBox = document.createElement("div");
-    userBox.className = `card card-${index}`;
-    userBox.innerHTML = butter;
-    main.appendChild(userBox);
 });
 
-let bts = document.querySelectorAll("button");
+document.querySelector("#main").innerHTML = butter;
+}
+
+show();
+
+// let bts = document.querySelectorAll("button");
 
 
-bts.forEach((bt, index) => {
-    let status = document.querySelector(`.card-${index} h3`);
-    var flag = 0;
-    bt.addEventListener("click", () => { 
-        if(flag==0) {       
-        bt.innerHTML = "Requesting..."
+// bts.forEach((bt, index) => {
+//     let status = document.querySelector(`.card-${index} h3`);
+//     var flag = 0;
+//     bt.addEventListener("click", () => { 
+//         if(flag==0) {       
+//         bt.innerHTML = "Requesting..."
 
-        setTimeout(() => {
-        status.innerHTML = "Friends";
-        status.style.color = "Green";
-        status.style.fontSize = "24px";
-        bt.innerHTML = "Remove Friend"
-        bt.style.backgroundColor = "redlight"
-        flag = 1;
-        }, 2000);
+//         setTimeout(() => {
+//         status.innerHTML = "Friends";
+//         status.style.color = "Green";
+//         status.style.fontSize = "24px";
+//         bt.innerHTML = "Remove Friend"
+//         bt.style.backgroundColor = "redlight"
+//         flag = 1;
+//         }, 2000);
 
+//     } else {
+//         status.innerHTML = "Strangers Again"
+//         status.style.color = "rgb(0, 96, 134)";
+//         status.style.fontSize = "21px";
+//         bt.innerHTML = "Add Friend"
+//         bt.style.backgroundColor = "rgba(85, 207, 255, 0.411)"
+//         flag = 0;
+//     }
+//     })
+
+// })
+
+main.addEventListener("click", (dets)=>{
+    if(totalUser[dets.target.id].status == "Stranger") {
+        totalUser[dets.target.id].status = "Friends";
+        show();
     } else {
-        status.innerHTML = "Strangers Again"
-        status.style.color = "rgb(0, 96, 134)";
-        status.style.fontSize = "21px";
-        bt.innerHTML = "Add Friend"
-        bt.style.backgroundColor = "rgba(85, 207, 255, 0.411)"
-        flag = 0;
+        totalUser[dets.target.id].status = "Stranger"
+        show();
     }
-    })
+});
 
-})
